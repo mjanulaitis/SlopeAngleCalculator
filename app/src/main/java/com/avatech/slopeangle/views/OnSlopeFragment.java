@@ -12,6 +12,9 @@ import com.avatech.slopeangle.R;
 import com.avatech.slopeangle.viewmodels.SlopeAngleViewModel;
 import com.avatech.slopeangle.databinding.FragmentOnSlopeBinding;
 
+//When the phone is in an upright orientation, displays the current angle of the
+//long edge relative to the ground.  Uses databinding to automatically update
+//the angle.
 public class OnSlopeFragment extends Fragment
 {
     private SlopeAngleViewModel viewModel;

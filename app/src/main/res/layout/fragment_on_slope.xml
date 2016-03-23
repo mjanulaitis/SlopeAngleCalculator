@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
-            android:text="On Slope"
+            android:text="@string/on_slope"
             android:padding="8dp"
             android:textAlignment="center"
             android:textSize="28dp"
@@ -25,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dip"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             >
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="Angle:"
+                android:text="@string/label_angle"
                 android:textSize="24dp"
                 android:textColor="@color/colorPrimary"
                 />

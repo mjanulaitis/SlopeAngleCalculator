@@ -11,6 +11,8 @@ import android.hardware.SensorManager;
 
 import com.avatech.slopeangle.BR;
 
+//Subscribes to the phone's sensors to retrieve the phone's angle relative to the
+//long edge of the phone.
 public class SlopeAngleViewModel extends BaseObservable implements SensorEventListener
 {
     private SensorManager sensorManager;
@@ -31,6 +33,7 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
     @Bindable
     private float radians;
 
+    //Creates a SlopeAngleViewModel.  Called by the view.
     public SlopeAngleViewModel(SensorManager sensorManager, Resources resources)
     {
         this.sensorManager = sensorManager;
@@ -45,6 +48,7 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
         matrixValues = new float[3];
     }
 
+    //Sets the angle of the phone relative to the long edge of the phone.
     private void setAngle(int value)
     {
         if (angle != value)
@@ -54,11 +58,13 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
         }
     }
 
+    //Gets the display angle as a string.
     public String getDisplayAngle()
     {
         return displayAngle;
     }
 
+    //Sets the display angle then notifies the view.
     private void setDisplayAngle(String value)
     {
         if (!displayAngle.equals(value))
@@ -68,11 +74,13 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
         }
     }
 
+    //Gets the current radians value.
     public float getRadians()
     {
         return radians;
     }
 
+    //Sets the radians value then notifies the view.
     private void setRadians(float value)
     {
         if (radians != value)
@@ -82,12 +90,14 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
         }
     }
 
+    //Enables the sensor listener.
     public void onResume()
     {
         sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+    //Disables the sensor listener.
     public void onPause()
     {
         sensorManager.unregisterListener(this, sensorAccelerometer);

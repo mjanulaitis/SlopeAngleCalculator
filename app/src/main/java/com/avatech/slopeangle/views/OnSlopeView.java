@@ -8,6 +8,9 @@ import android.view.View;
 
 import com.avatech.slopeangle.R;
 
+//Draws a circle with a line that runs through. When the phone is in an upright
+//orientation the line simulates flat ground.  Uses databinding to automatically
+//update the angle of the line.
 public class OnSlopeView extends View
 {
     private static final int BUF = 4;

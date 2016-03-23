@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.avatech.slopeangle.R;
 
+//Displays the camera's view and overlays the angle of orientation relative to
+//the location being pointed at.
 public class AboveSlopeFragment extends Fragment
 {
     public AboveSlopeFragment()

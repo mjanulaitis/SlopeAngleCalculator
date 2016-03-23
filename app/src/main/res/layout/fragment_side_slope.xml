@@ -7,12 +7,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Side of Slope"
+        android:text="@string/side_of_slope"
         android:padding="8dp"
-        android:textColor="#fff"
+        android:textColor="@color/colorPrimary"
         android:background="@color/colorAccent"
-        android:textSize="28sp"
-        android:id="@+id/textView"
+        android:textSize="28dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

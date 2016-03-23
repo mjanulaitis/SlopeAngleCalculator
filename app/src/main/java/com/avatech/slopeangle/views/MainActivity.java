@@ -8,17 +8,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.avatech.slopeangle.R;
 
+//The main activity.  Displays a Toolbar, NavigationView and Fragment.
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
-
-    DrawerLayout drawer;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,30 +42,19 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().performIdentifierAction(R.id.nav_above_slope, 0);
     }
 
-    private void displayFragment(Fragment fragment)
-    {
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, fragment);
-        fragmentTransaction.commit();
-    }
-
     @Override
     public void onBackPressed()
     {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START))
-        {
             drawer.closeDrawer(GravityCompat.START);
-        } else
-        {
+        else
             super.onBackPressed();
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -72,12 +62,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings)
         {
             Toast.makeText(this, R.string.not_implemented_yet, Toast.LENGTH_LONG).show();
@@ -91,7 +77,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
     {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,8 +105,14 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
         }
-
-
         return true;
+    }
+
+    //Displays the passed fragment.
+    private void displayFragment(Fragment fragment)
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragment);
+        fragmentTransaction.commit();
     }
 }
