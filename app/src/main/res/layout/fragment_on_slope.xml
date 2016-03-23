@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <import type="android.view.View" />
+        <variable name="vm" type="com.avatech.slopeangle.SlopeAngleViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorLightAccent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
+            android:text="On Slope"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:textSize="28dp"
+            android:textColor="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Angle:"
+                android:textSize="24dp"
+                android:textColor="@color/colorPrimary"
+                />
+
+            <TextView
+                android:id="@+id/pitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textSize="24dp"
+                android:textColor="@color/colorPrimary"
+                android:text="@{vm.displayAngle}"/>
+                />
+        </LinearLayout>
+
+        <layout.OnSlopeView
+            android:id="@+id/onSlopeView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            app:radians="@{vm.radians}"
+            />
+
+    </LinearLayout>
+</layout>
