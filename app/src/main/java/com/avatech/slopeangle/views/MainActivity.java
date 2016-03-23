@@ -1,4 +1,4 @@
-package com.avatech.slopeangle;
+package com.avatech.slopeangle.views;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,10 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import layout.AboveSlopeFragment;
-import layout.NotImplementedYetFragment;
-import layout.OnSlopeFragment;
-import layout.SideSlopeFragment;
+import com.avatech.slopeangle.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener

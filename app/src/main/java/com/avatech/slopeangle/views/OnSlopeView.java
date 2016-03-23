@@ -1,4 +1,4 @@
-package layout;
+package com.avatech.slopeangle.views;
 
 import android.content.Context;
 import android.graphics.Canvas;

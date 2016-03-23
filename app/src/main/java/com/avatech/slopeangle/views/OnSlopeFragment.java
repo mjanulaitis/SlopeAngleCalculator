@@ -1,4 +1,4 @@
-package layout;
+package com.avatech.slopeangle.views;
 
 import android.databinding.DataBindingUtil;
 import android.hardware.SensorManager;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.avatech.slopeangle.R;
-import com.avatech.slopeangle.SlopeAngleViewModel;
+import com.avatech.slopeangle.viewmodels.SlopeAngleViewModel;
 import com.avatech.slopeangle.databinding.FragmentOnSlopeBinding;
 
 public class OnSlopeFragment extends Fragment

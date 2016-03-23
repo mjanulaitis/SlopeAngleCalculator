@@ -4,7 +4,7 @@
     >
     <data>
         <import type="android.view.View" />
-        <variable name="vm" type="com.avatech.slopeangle.SlopeAngleViewModel"/>
+        <variable name="vm" type="com.avatech.slopeangle.viewmodels.SlopeAngleViewModel"/>
     </data>
 
     <LinearLayout
@@ -50,7 +50,7 @@
                 />
         </LinearLayout>
 
-        <layout.OnSlopeView
+        <com.avatech.slopeangle.views.OnSlopeView
             android:id="@+id/onSlopeView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

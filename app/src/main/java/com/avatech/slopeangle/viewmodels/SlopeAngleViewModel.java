@@ -1,4 +1,4 @@
-package com.avatech.slopeangle;
+package com.avatech.slopeangle.viewmodels;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -8,6 +8,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+
+import com.avatech.slopeangle.BR;
 
 public class SlopeAngleViewModel extends BaseObservable implements SensorEventListener
 {
