@@ -17,35 +17,38 @@ import com.avatech.slopeangle.databinding.FragmentOnSlopeBinding;
 //the angle.
 public class OnSlopeFragment extends Fragment
 {
-    private SlopeAngleViewModel viewModel;
+    private static MainActivity activity;
 
     public OnSlopeFragment()
     {
     }
 
+    public void setActivity(MainActivity activity)
+    {
+        this.activity = activity;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        SensorManager sensorManager = (SensorManager)getContext().getSystemService(android.content.Context.SENSOR_SERVICE);
-
-        viewModel = new SlopeAngleViewModel(sensorManager, getResources());
-
         FragmentOnSlopeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_on_slope, container, false);
-        binding.setVm(viewModel);
+        binding.setVm(MainActivity.viewModel);
         return binding.getRoot();
     }
 
     @Override
     public void onResume()
     {
-        viewModel.onResume();
         super.onResume();
+        activity.onResumeViewModel();
     }
 
     @Override
     public void onPause()
     {
-        viewModel.onPause();
+        activity.viewModel.onPause();
         super.onPause();
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.avatech.slopeangle.viewmodels;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
@@ -16,7 +17,6 @@ import com.avatech.slopeangle.BR;
 public class SlopeAngleViewModel extends BaseObservable implements SensorEventListener
 {
     private SensorManager sensorManager;
-    private Resources resources;
     private Sensor sensorAccelerometer;
     private Sensor sensorMagneticField;
     private float[] valuesAccelerometer;
@@ -24,21 +24,29 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
     private float[] matrixR;
     private float[] matrixI;
     private float[] matrixValues;
+    private boolean isPortrait;
 
     private int angle;
+    private int roll;
+    private int recordedRoll;
 
     @Bindable
     private String displayAngle = "0";
+    
+    @Bindable
+    private String displayRoll = "0";
+
+    @Bindable
+    private String displayRecordedRoll = "0";
 
     @Bindable
     private float radians;
 
     //Creates a SlopeAngleViewModel.  Called by the view.
-    public SlopeAngleViewModel(SensorManager sensorManager, Resources resources)
+    public SlopeAngleViewModel(Activity activity)
     {
-        this.sensorManager = sensorManager;
-        this.resources = resources;
-
+        setActivity(activity);
+        sensorManager = (SensorManager)activity.getSystemService(android.content.Context.SENSOR_SERVICE);
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         valuesAccelerometer = new float[3];
@@ -46,6 +54,11 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
         matrixR = new float[9];
         matrixI = new float[9];
         matrixValues = new float[3];
+    }
+
+    public void setActivity(Activity activity)
+    {
+        isPortrait = activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
     //Sets the angle of the phone relative to the long edge of the phone.
@@ -90,9 +103,49 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
         }
     }
 
-    //Enables the sensor listener.
-    public void onResume()
+    //Sets the roll roll of the phone relative to the long edge of the phone.
+    private void setRoll(int value)
     {
+        value = 90 - value;
+        if (roll != value)
+        {
+            roll = value;
+            setDisplayRoll("" + roll);
+        }
+    }
+
+    //Gets the display roll as a string.
+    public String getDisplayRoll()
+    {
+        return displayRoll;
+    }
+
+    //Sets the display roll then notifies the view.
+    private void setDisplayRoll(String value)
+    {
+        if (!displayRoll.equals(value))
+        {
+            displayRoll = value;
+            notifyPropertyChanged(BR.displayRoll);
+        }
+    }
+
+    public String getDisplayRecordedRoll()
+    {
+        return displayRecordedRoll;
+    }
+
+    public void recordRoll()
+    {
+        recordedRoll = roll;
+        displayRecordedRoll = "" + recordedRoll;
+        notifyPropertyChanged(BR.displayRecordedRoll);
+    }
+
+    //Enables the sensor listener.
+    public void onResume(Activity activity)
+    {
+        setActivity(activity);
         sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_NORMAL);
     }
@@ -112,7 +165,7 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
     @Override
     public void onSensorChanged(SensorEvent event)
     {
-        switch(event.sensor.getType())
+        switch (event.sensor.getType())
         {
             case Sensor.TYPE_ACCELEROMETER:
                 valuesAccelerometer = event.values.clone();
@@ -127,23 +180,27 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
         {
             SensorManager.getOrientation(matrixR, matrixValues);
             setAngle((int) Math.abs(Math.round(Math.toDegrees(matrixValues[1]))));
+
             double roll = Math.toDegrees(matrixValues[2]);
 
             float radians = matrixValues[1];
-            if (Configuration.ORIENTATION_PORTRAIT == resources.getConfiguration().orientation)
+            if (isPortrait)
             {
+                setRoll((int) Math.abs(Math.round(Math.toDegrees(matrixValues[1]))));
+
                 double degrees = Math.toDegrees(radians);
                 if (roll > 0)
-                    radians = (float)Math.toRadians(-1 * degrees + 90);
+                    radians = (float) Math.toRadians(-1 * degrees + 90);
                 else
-                    radians = (float)Math.toRadians(degrees + 90);
+                    radians = (float) Math.toRadians(degrees + 90);
             }
             else
             {
+                setRoll((int) Math.abs(Math.round(Math.toDegrees(matrixValues[2]))));
                 if (roll > 0)
                 {
                     double degrees = Math.toDegrees(radians);
-                    radians = (float)Math.toRadians(-1 * degrees);
+                    radians = (float) Math.toRadians(-1 * degrees);
                 }
             }
 

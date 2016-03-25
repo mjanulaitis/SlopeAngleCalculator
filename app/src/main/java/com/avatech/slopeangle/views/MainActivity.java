@@ -1,5 +1,8 @@
 package com.avatech.slopeangle.views;
 
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,15 +14,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.avatech.slopeangle.R;
+import com.avatech.slopeangle.viewmodels.SlopeAngleViewModel;
+
+import butterknife.Bind;
 
 //The main activity.  Displays a Toolbar, NavigationView and Fragment.
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
-    private DrawerLayout drawer;
+    public static SlopeAngleViewModel viewModel;
+    private static Fragment currentFragment;
+    private static AboveSlopeFragment aboveSlopeFragment;
+    private static OnSlopeFragment onSlopeFragment;
+    private static SideSlopeFragment sideSlopeFragment;
+    private static NotImplementedYetFragment notImplementedYetFragment;
+
+    public MainActivity()
+    {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -40,6 +57,22 @@ public class MainActivity extends AppCompatActivity
 
         if (savedInstanceState == null)
             navigationView.getMenu().performIdentifierAction(R.id.nav_above_slope, 0);
+
+        if (viewModel == null)
+            viewModel = new SlopeAngleViewModel(this);
+    }
+
+//    @Override
+//    public void onResume()
+//    {
+//        super.onResume();
+////        if (currentFragment != null && currentFragment == onSlopeFragment)
+////            viewModel.onResume(this);
+//    }
+
+    public void onResumeViewModel()
+    {
+        viewModel.onResume(this);
     }
 
     @Override
@@ -82,29 +115,44 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
+        currentFragment = null;
+
         switch (id)
         {
             case R.id.nav_above_slope:
             {
-                displayFragment(new AboveSlopeFragment());
+                if (aboveSlopeFragment == null)
+                    aboveSlopeFragment = new AboveSlopeFragment();
+                currentFragment = aboveSlopeFragment;
                 break;
             }
             case R.id.nav_on_slope:
             {
-                displayFragment(new OnSlopeFragment());
+                if (onSlopeFragment == null)
+                {
+                    onSlopeFragment = new OnSlopeFragment();
+                    onSlopeFragment.setActivity(this);
+                }
+                currentFragment = onSlopeFragment;
                 break;
             }
             case R.id.nav_side_slope:
             {
-                displayFragment(new SideSlopeFragment());
+                if (sideSlopeFragment == null)
+                    sideSlopeFragment = new SideSlopeFragment();
+                currentFragment = sideSlopeFragment;
                 break;
             }
             default:
             {
-                displayFragment(new NotImplementedYetFragment());
+                if (notImplementedYetFragment == null)
+                    notImplementedYetFragment = new NotImplementedYetFragment();
+                currentFragment = notImplementedYetFragment;
                 break;
             }
         }
+
+        displayFragment(currentFragment);
         return true;
     }
 
@@ -114,5 +162,10 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void onCalculate(View view)
+    {
+        startActivity(new Intent(this, AboveSlopeCameraActivity.class));
     }
 }

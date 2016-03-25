@@ -40,13 +40,29 @@
                 />
 
             <TextView
-                android:id="@+id/pitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:textSize="24dp"
                 android:textColor="@color/colorPrimary"
                 android:text="@{vm.displayAngle}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Roll: "
+                android:textSize="24dp"
+                android:textColor="@color/colorPrimary"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textSize="24dp"
+                android:textColor="@color/colorPrimary"
+                android:text="@{vm.displayRoll}"/>
                 />
         </LinearLayout>
 
