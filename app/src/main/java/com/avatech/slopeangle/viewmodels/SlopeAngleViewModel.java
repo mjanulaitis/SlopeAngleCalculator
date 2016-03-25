@@ -103,7 +103,7 @@ public class SlopeAngleViewModel extends BaseObservable implements SensorEventLi
         }
     }
 
-    //Sets the roll roll of the phone relative to the long edge of the phone.
+    //Sets the roll of the phone relative to the face of the phone.
     private void setRoll(int value)
     {
         value = 90 - value;
